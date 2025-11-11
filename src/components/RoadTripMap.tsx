@@ -456,15 +456,15 @@ export default function RoadTripMap() {
 
   return (
     <div className="relative w-full h-screen bg-black overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 bg-red-500 text-black font-mono text-sm font-bold py-2 overflow-hidden z-50">
+      <div className="absolute top-0 left-0 right-0 bg-red-500 text-black font-mono text-xs sm:text-sm font-bold py-1.5 sm:py-2 overflow-hidden z-50">
         <div className="ticker-content whitespace-nowrap">
           {tickerMessages.map((msg, idx) => (
-            <span key={idx} className="inline-block px-8">
+            <span key={idx} className="inline-block px-4 sm:px-8">
               {msg}
             </span>
           ))}
           {tickerMessages.map((msg, idx) => (
-            <span key={`repeat-${idx}`} className="inline-block px-8">
+            <span key={`repeat-${idx}`} className="inline-block px-4 sm:px-8">
               {msg}
             </span>
           ))}
@@ -473,46 +473,46 @@ export default function RoadTripMap() {
 
       <div ref={mapContainer} className="w-full h-full" />
 
-      <div className="absolute top-14 right-4 z-40 pointer-events-auto">
-        <div className="bg-black/95 px-6 py-4 rounded-lg border-2 border-red-500 shadow-[0_0_30px_rgba(255,0,0,0.3)] font-mono">
+      <div className="absolute top-12 sm:top-14 right-2 sm:right-4 z-40 pointer-events-auto">
+        <div className="bg-black/95 px-3 py-2 sm:px-6 sm:py-4 rounded-lg border-2 border-red-500 shadow-[0_0_30px_rgba(255,0,0,0.3)] font-mono">
           {!countdownExpired && (
             <>
-              <div className="text-xs text-red-500 mb-1 tracking-wider">[DEPARTURE]</div>
-              <div className="text-2xl font-bold text-red-500 tracking-wider">{countdown}</div>
+              <div className="text-[10px] sm:text-xs text-red-500 mb-1 tracking-wider">[DEPARTURE]</div>
+              <div className="text-base sm:text-2xl font-bold text-red-500 tracking-wider">{countdown}</div>
             </>
           )}
           <button
             onClick={() => setShowCodeEntry(true)}
-            className={`${!countdownExpired ? 'mt-3' : ''} w-full px-4 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded text-xs text-red-300 hover:text-red-200 transition-colors cursor-pointer font-bold`}
+            className={`${!countdownExpired ? 'mt-2 sm:mt-3' : ''} w-full px-2 py-1.5 sm:px-4 sm:py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded text-[10px] sm:text-xs text-red-300 hover:text-red-200 transition-colors cursor-pointer font-bold whitespace-nowrap`}
           >
             &gt; JOIN_WAITLIST
           </button>
         </div>
       </div>
 
-      <div className="pointer-events-none absolute top-14 left-4 max-w-md">
-        <div className="pointer-events-auto bg-black/95 px-6 py-4 rounded-lg border-2 border-red-500 shadow-[0_0_30px_rgba(255,0,0,0.3)] font-mono">
-          <div className="text-2xl font-bold text-red-500 mb-3 tracking-wider">&gt; TO SLUSH</div>
+      <div className="pointer-events-none absolute top-28 sm:top-14 left-2 sm:left-4 right-2 sm:right-auto sm:max-w-md">
+        <div className="pointer-events-auto bg-black/95 px-3 py-3 sm:px-6 sm:py-4 rounded-lg border-2 border-red-500 shadow-[0_0_30px_rgba(255,0,0,0.3)] font-mono">
+          <div className="text-lg sm:text-2xl font-bold text-red-500 mb-2 sm:mb-3 tracking-wider">&gt; TO SLUSH</div>
 
-          <div className="text-sm text-red-400 mb-4">
-            <span className="text-red-500">[TRACKED_LOCATION]</span>
+          <div className="text-xs sm:text-sm text-red-400 mb-3 sm:mb-4">
+            <span className="text-red-500 text-[10px] sm:text-xs">[TRACKED_LOCATION]</span>
             <br />
-            <span className="text-red-300">{currentLocation}</span>
+            <span className="text-red-300 text-xs sm:text-sm break-words">{currentLocation}</span>
             {liveCoords && (
               <>
-                <div className="text-xs text-red-500/70 mt-1">
+                <div className="text-[10px] sm:text-xs text-red-500/70 mt-1">
                   {liveCoords[1].toFixed(6)}, {liveCoords[0].toFixed(6)}
                 </div>
                 {lastUpdate && (
-                  <div className="text-xs text-green-400 mt-1 flex items-center gap-2">
+                  <div className="text-[10px] sm:text-xs text-green-400 mt-1 flex items-center gap-2">
                     <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
                     <span>LIVE - {timeSinceUpdate}</span>
                   </div>
                 )}
-                <div className="flex gap-2 mt-2">
+                <div className="flex flex-col sm:flex-row gap-2 mt-2">
                   <button
                     onClick={focusOnCurrentLocation}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded text-xs text-red-300 hover:text-red-200 transition-colors cursor-pointer"
+                    className="inline-flex items-center justify-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-1.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded text-[10px] sm:text-xs text-red-300 hover:text-red-200 transition-colors cursor-pointer whitespace-nowrap"
                   >
                     &gt; ZOOM_TO_TARGET
                   </button>
@@ -520,7 +520,7 @@ export default function RoadTripMap() {
                     href={`https://www.google.com/maps?q=${liveCoords[1]},${liveCoords[0]}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded text-xs text-red-300 hover:text-red-200 transition-colors cursor-pointer"
+                    className="inline-flex items-center justify-center gap-1 sm:gap-2 px-2 py-1 sm:px-3 sm:py-1.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded text-[10px] sm:text-xs text-red-300 hover:text-red-200 transition-colors cursor-pointer whitespace-nowrap"
                   >
                     &gt; OPEN_GOOGLE_MAPS
                   </a>
@@ -529,8 +529,8 @@ export default function RoadTripMap() {
             )}
           </div>
 
-          <div className="text-xs text-red-500 mb-2 tracking-wider">[ROUTE]</div>
-          <div className="flex flex-col gap-1.5 text-xs text-red-400 max-h-64 overflow-y-auto">
+          <div className="text-[10px] sm:text-xs text-red-500 mb-2 tracking-wider">[ROUTE]</div>
+          <div className="flex flex-col gap-1.5 text-[10px] sm:text-xs text-red-400 max-h-40 sm:max-h-64 overflow-y-auto">
             {routeLocations.map((loc, idx) => (
               <div key={idx} className="flex items-center gap-2">
                 <div
@@ -548,9 +548,9 @@ export default function RoadTripMap() {
       </div>
 
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/90 backdrop-blur-sm z-50">
-          <div className="bg-black px-8 py-6 rounded-lg border-2 border-red-500 shadow-[0_0_40px_rgba(255,0,0,0.4)]">
-            <div className="text-lg font-bold text-red-500 font-mono tracking-wider animate-pulse">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/90 backdrop-blur-sm z-50 px-4">
+          <div className="bg-black px-4 py-4 sm:px-8 sm:py-6 rounded-lg border-2 border-red-500 shadow-[0_0_40px_rgba(255,0,0,0.4)]">
+            <div className="text-sm sm:text-lg font-bold text-red-500 font-mono tracking-wider animate-pulse">
               &gt; INITIALIZING_MAP...
             </div>
           </div>
@@ -559,16 +559,16 @@ export default function RoadTripMap() {
 
       {showCodeEntry && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/90 backdrop-blur-sm z-50 p-4">
-          <div className="bg-black px-8 py-8 rounded-lg border-2 border-red-500 shadow-[0_0_50px_rgba(255,0,0,0.5)] max-w-md w-full">
-            <div className="text-2xl font-bold text-red-500 mb-2 tracking-wider font-mono text-center">
+          <div className="bg-black px-4 py-6 sm:px-8 sm:py-8 rounded-lg border-2 border-red-500 shadow-[0_0_50px_rgba(255,0,0,0.5)] max-w-md w-full">
+            <div className="text-lg sm:text-2xl font-bold text-red-500 mb-2 tracking-wider font-mono text-center">
               &gt; ACCESS_CODE
             </div>
-            <p className="text-xs text-red-400 mb-6 font-mono text-center">
+            <p className="text-[10px] sm:text-xs text-red-400 mb-4 sm:mb-6 font-mono text-center">
               Enter the 4-digit access code to continue
             </p>
 
-            <form onSubmit={handleCodeSubmit} className="space-y-6">
-              <div className="flex justify-center gap-3">
+            <form onSubmit={handleCodeSubmit} className="space-y-4 sm:space-y-6">
+              <div className="flex justify-center gap-2 sm:gap-3">
                 {[0, 1, 2, 3].map((index) => (
                   <input
                     key={index}
@@ -579,16 +579,16 @@ export default function RoadTripMap() {
                     value={code[index]}
                     onChange={(e) => handleCodeInput(index, e.target.value)}
                     onKeyDown={(e) => handleCodeKeyDown(index, e)}
-                    className="w-16 h-16 bg-black border-2 border-red-500/50 rounded-lg text-red-300 font-mono text-3xl font-bold text-center focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:shadow-[0_0_20px_rgba(255,0,0,0.3)] transition-all"
+                    className="w-12 h-12 sm:w-16 sm:h-16 bg-black border-2 border-red-500/50 rounded-lg text-red-300 font-mono text-2xl sm:text-3xl font-bold text-center focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:shadow-[0_0_20px_rgba(255,0,0,0.3)] transition-all"
                     required
                   />
                 ))}
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-3 bg-red-500/20 hover:bg-red-500/30 border-2 border-red-500 rounded text-red-300 hover:text-red-200 font-bold font-mono tracking-wider transition-all cursor-pointer"
+                  className="flex-1 px-4 py-2 sm:py-3 bg-red-500/20 hover:bg-red-500/30 border-2 border-red-500 rounded text-xs sm:text-sm text-red-300 hover:text-red-200 font-bold font-mono tracking-wider transition-all cursor-pointer"
                 >
                   &gt; UNLOCK
                 </button>
@@ -598,7 +598,7 @@ export default function RoadTripMap() {
                     setShowCodeEntry(false);
                     setCode(['', '', '', '']);
                   }}
-                  className="flex-1 px-4 py-3 bg-transparent hover:bg-red-500/10 border-2 border-red-500/50 rounded text-red-400 hover:text-red-300 font-bold font-mono tracking-wider transition-all cursor-pointer"
+                  className="flex-1 px-4 py-2 sm:py-3 bg-transparent hover:bg-red-500/10 border-2 border-red-500/50 rounded text-xs sm:text-sm text-red-400 hover:text-red-300 font-bold font-mono tracking-wider transition-all cursor-pointer"
                 >
                   &gt; CANCEL
                 </button>
@@ -609,69 +609,69 @@ export default function RoadTripMap() {
       )}
 
       {showWaitlist && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/90 backdrop-blur-sm z-50 p-4">
-          <div className="bg-black px-8 py-8 rounded-lg border-2 border-red-500 shadow-[0_0_50px_rgba(255,0,0,0.5)] max-w-md w-full">
-            <div className="text-2xl font-bold text-red-500 mb-2 tracking-wider font-mono text-center">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/90 backdrop-blur-sm z-50 p-4 overflow-y-auto">
+          <div className="bg-black px-4 py-6 sm:px-8 sm:py-8 rounded-lg border-2 border-red-500 shadow-[0_0_50px_rgba(255,0,0,0.5)] max-w-md w-full my-auto">
+            <div className="text-lg sm:text-2xl font-bold text-red-500 mb-2 tracking-wider font-mono text-center">
               &gt; JOIN_CARAVAN
             </div>
-            <p className="text-xs text-red-400 mb-6 font-mono text-center">
+            <p className="text-[10px] sm:text-xs text-red-400 mb-4 sm:mb-6 font-mono text-center">
               Sign up to join us on this epic journey to Slush 2025
             </p>
 
-            <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+            <form onSubmit={handleWaitlistSubmit} className="space-y-3 sm:space-y-4">
               <div>
-                <label className="block text-xs text-red-500 mb-1 font-mono tracking-wider">
+                <label className="block text-[10px] sm:text-xs text-red-500 mb-1 font-mono tracking-wider">
                   [NAME]
                 </label>
                 <input
                   type="text"
                   name="name"
                   required
-                  className="w-full px-4 py-2 bg-black border border-red-500/50 rounded text-red-300 font-mono focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                  className="w-full px-3 py-2 sm:px-4 text-xs sm:text-sm bg-black border border-red-500/50 rounded text-red-300 font-mono focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                   placeholder="Enter your name"
                 />
               </div>
 
               <div>
-                <label className="block text-xs text-red-500 mb-1 font-mono tracking-wider">
+                <label className="block text-[10px] sm:text-xs text-red-500 mb-1 font-mono tracking-wider">
                   [PHONE_NUMBER]
                 </label>
                 <input
                   type="tel"
                   name="phone"
                   required
-                  className="w-full px-4 py-2 bg-black border border-red-500/50 rounded text-red-300 font-mono focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+                  className="w-full px-3 py-2 sm:px-4 text-xs sm:text-sm bg-black border border-red-500/50 rounded text-red-300 font-mono focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                   placeholder="Enter your phone number"
                 />
               </div>
 
-              <div className="flex gap-3 mt-6">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4 sm:mt-6">
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-3 bg-red-500/20 hover:bg-red-500/30 border-2 border-red-500 rounded text-red-300 hover:text-red-200 font-bold font-mono tracking-wider transition-all cursor-pointer"
+                  className="flex-1 px-4 py-2 sm:py-3 bg-red-500/20 hover:bg-red-500/30 border-2 border-red-500 rounded text-xs sm:text-sm text-red-300 hover:text-red-200 font-bold font-mono tracking-wider transition-all cursor-pointer"
                 >
                   &gt; SUBMIT
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowWaitlist(false)}
-                  className="flex-1 px-4 py-3 bg-transparent hover:bg-red-500/10 border-2 border-red-500/50 rounded text-red-400 hover:text-red-300 font-bold font-mono tracking-wider transition-all cursor-pointer"
+                  className="flex-1 px-4 py-2 sm:py-3 bg-transparent hover:bg-red-500/10 border-2 border-red-500/50 rounded text-xs sm:text-sm text-red-400 hover:text-red-300 font-bold font-mono tracking-wider transition-all cursor-pointer"
                 >
                   &gt; CANCEL
                 </button>
               </div>
             </form>
 
-            <div className="mt-6 pt-6 border-t border-red-500/30">
-              <div className="flex justify-center gap-4 mb-4">
+            <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-red-500/30">
+              <div className="flex justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
                 <a
                   href="https://www.instagram.com/teloshouse/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded transition-colors"
+                  className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded transition-colors"
                   aria-label="Instagram"
                 >
-                  <svg className="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                   </svg>
                 </a>
@@ -679,10 +679,10 @@ export default function RoadTripMap() {
                   href="https://x.com/TelosHouse"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded transition-colors"
+                  className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded transition-colors"
                   aria-label="Twitter"
                 >
-                  <svg className="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                   </svg>
                 </a>
@@ -690,10 +690,10 @@ export default function RoadTripMap() {
                   href="https://www.linkedin.com/company/teloshouse/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded transition-colors"
+                  className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded transition-colors"
                   aria-label="LinkedIn"
                 >
-                  <svg className="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                   </svg>
                 </a>
@@ -701,7 +701,7 @@ export default function RoadTripMap() {
               <div className="text-center">
                 <a
                   href="mailto:team@telousehouse.com"
-                  className="text-xs text-red-400 hover:text-red-300 font-mono transition-colors"
+                  className="text-[10px] sm:text-xs text-red-400 hover:text-red-300 font-mono transition-colors break-all"
                 >
                   team@telousehouse.com
                 </a>
