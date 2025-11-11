@@ -22,6 +22,7 @@ export default function RoadTripMap() {
   const [showCodeEntry, setShowCodeEntry] = useState(false);
   const [showWaitlist, setShowWaitlist] = useState(false);
   const [code, setCode] = useState(['', '', '', '']);
+  const [isStale, setIsStale] = useState(false);
   const currentMarkerRef = useRef<maplibregl.Marker | null>(null);
   const lastAddressLookupTime = useRef(0);
   const lastAddressCoords = useRef<[number, number] | null>(null);
@@ -53,18 +54,17 @@ export default function RoadTripMap() {
             ];
             setLiveCoords(coords);
             setLastUpdate(new Date(data.location.timestamp));
+            setIsStale(data.stale || false);
             updateCurrentLocation(coords);
-
-            if (data.stale) {
-              setCurrentLocation(prev => `${prev} (Last seen 5+ minutes ago)`);
-            }
           }
         } else {
           setCurrentLocation('Waiting for tracker to launch...');
+          setIsStale(false);
         }
       } catch (error) {
         console.error('Failed to fetch location:', error);
         setCurrentLocation('Unable to fetch location');
+        setIsStale(false);
       }
     };
 
@@ -313,32 +313,41 @@ export default function RoadTripMap() {
     const services = [
       async () => {
         const response = await fetch(
-          `https://api.opencagedata.com/geocode/v1/json?q=${coords[1]},${coords[0]}&key=demo&language=en&pretty=1&no_annotations=1`
-        );
-        const data = await response.json();
-        if (data.results && data.results[0]) {
-          return data.results[0].formatted;
-        }
-        return null;
-      },
-      async () => {
-        const response = await fetch(
           `https://corsproxy.io/?${encodeURIComponent(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords[1]}&lon=${coords[0]}&zoom=16&addressdetails=1`
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords[1]}&lon=${coords[0]}&zoom=18&addressdetails=1`
           )}`
         );
         const data = await response.json();
 
         if (data.address) {
           const parts = [];
-          if (data.address.road) parts.push(data.address.road);
-          if (data.address.suburb || data.address.neighbourhood) {
-            parts.push(data.address.suburb || data.address.neighbourhood);
+          // Build detailed street address
+          if (data.address.house_number && data.address.road) {
+            parts.push(`${data.address.house_number} ${data.address.road}`);
+          } else if (data.address.road) {
+            parts.push(data.address.road);
           }
+
+          // Add neighborhood/suburb if available and different from city
+          if (data.address.suburb || data.address.neighbourhood) {
+            const area = data.address.suburb || data.address.neighbourhood;
+            parts.push(area);
+          }
+
+          // Add city/town
           if (data.address.city || data.address.town || data.address.village) {
             parts.push(data.address.city || data.address.town || data.address.village);
           }
-          if (data.address.country) parts.push(data.address.country);
+
+          // Add country (shortened)
+          if (data.address.country) {
+            // Shorten common long country names
+            const country = data.address.country
+              .replace('United Kingdom of Great Britain and Northern Ireland (the)', 'United Kingdom')
+              .replace('United Kingdom', 'UK');
+            parts.push(country);
+          }
+
           return parts.join(', ') || data.display_name;
         }
         return data.display_name;
@@ -348,12 +357,32 @@ export default function RoadTripMap() {
           `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${coords[1]}&longitude=${coords[0]}&localityLanguage=en`
         );
         const data = await response.json();
-        if (data.locality || data.city) {
-          const parts = [];
-          if (data.locality) parts.push(data.locality);
-          if (data.city && data.city !== data.locality) parts.push(data.city);
-          if (data.countryName) parts.push(data.countryName);
-          return parts.join(', ');
+
+        const parts = [];
+        // Try to build a detailed address
+        if (data.localityInfo?.administrative?.[0]?.name) {
+          parts.push(data.localityInfo.administrative[0].name);
+        }
+        if (data.locality) parts.push(data.locality);
+        if (data.city && data.city !== data.locality) parts.push(data.city);
+        if (data.principalSubdivision) parts.push(data.principalSubdivision);
+        if (data.countryName) parts.push(data.countryName === 'United Kingdom' ? 'UK' : data.countryName);
+
+        if (parts.length > 0) return parts.join(', ');
+        return null;
+      },
+      async () => {
+        const response = await fetch(
+          `https://api.opencagedata.com/geocode/v1/json?q=${coords[1]},${coords[0]}&key=demo&language=en&pretty=1&no_annotations=1`
+        );
+        const data = await response.json();
+        if (data.results && data.results[0]) {
+          // Clean up the formatted address
+          let address = data.results[0].formatted;
+          address = address
+            .replace('United Kingdom of Great Britain and Northern Ireland (the)', 'UK')
+            .replace('United Kingdom', 'UK');
+          return address;
         }
         return null;
       },
@@ -498,12 +527,15 @@ export default function RoadTripMap() {
             <span className="text-red-500 text-[10px] sm:text-xs">[TRACKED_LOCATION]</span>
             <br />
             <span className="text-red-300 text-xs sm:text-sm break-words">{currentLocation}</span>
+            {isStale && (
+              <span className="text-yellow-400 text-[10px] sm:text-xs ml-1">(Last seen 5+ minutes ago)</span>
+            )}
             {liveCoords && (
               <>
                 <div className="text-[10px] sm:text-xs text-red-500/70 mt-1">
                   {liveCoords[1].toFixed(6)}, {liveCoords[0].toFixed(6)}
                 </div>
-                {lastUpdate && (
+                {lastUpdate && !isStale && (
                   <div className="text-[10px] sm:text-xs text-green-400 mt-1 flex items-center gap-2">
                     <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
                     <span>LIVE - {timeSinceUpdate}</span>
