@@ -112,6 +112,7 @@ export default function Home() {
                     className="h-6 md:h-8 w-auto"
                   />
                 </a>
+                {/* Supercell Logo 
                 <a
                   href="https://supercell.com/en/"
                   target="_blank"
@@ -124,6 +125,7 @@ export default function Home() {
                     className="h-6 md:h-8 w-auto"
                   />
                 </a>
+                */}
               </div>
             </div>
 
