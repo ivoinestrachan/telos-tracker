@@ -144,7 +144,17 @@ export default function RoadTripMap() {
             attribution: '&copy; OpenStreetMap contributors',
           },
         },
-        layers: [{ id: 'base', type: 'raster', source: 'raster-tiles' }],
+        layers: [
+          {
+            id: 'base',
+            type: 'raster',
+            source: 'raster-tiles',
+            paint: {
+              'raster-saturation': -0.9,
+              'raster-brightness-max': 0.15,
+            },
+          },
+        ],
       },
       center: [13, 54],
       zoom: 4.5,
@@ -153,8 +163,6 @@ export default function RoadTripMap() {
     map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
 
     map.current.on('load', () => {
-      map.current!.setPaintProperty('base', 'raster-saturation', -0.9);
-      map.current!.setPaintProperty('base', 'raster-brightness-max', 0.15);
       addRoute();
       addMarkers();
       setIsLoading(false);
