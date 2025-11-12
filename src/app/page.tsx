@@ -22,7 +22,7 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                   <div className="text-sm text-red-500">DOCUMENT ID:</div>
-                  <div className="text-base md:text-lg font-bold">
+                  <div className="text-base md:text-lg ">
                     SLUSH-2025-CARAVAN
                   </div>
                 </div>
@@ -36,7 +36,7 @@ export default function Home() {
             </div>
             <div className="mt-4">
               <div className="text-sm text-red-500">OPERATION NAME:</div>
-              <div className="text-lg md:text-2xl font-bold">
+              <div className="text-lg md:text-2xl ">
                 &gt; TELOS CARAVAN TO SLUSH
               </div>
             </div>
@@ -60,9 +60,9 @@ export default function Home() {
                 [SECTION 1: MISSION BRIEF]
               </div>
               <div className="pl-4 text-xs md:text-sm leading-relaxed">
-                <p>
-                  assemble europe’s brightest founders. fuel a 40hr odyssey from
-                  london to helsinki. infiltrate slush and make history.
+                 <p className="mt-2">
+                  ASSEMBLE EUROPRES BRIGHTEST FOUNDERS. FUEL A 80HR ODYSSEY FROM
+                  LONDON TO HELSINKI. TAKEOVER SLUSH AND MAKE HISTORY.
                 </p>
               </div>
             </div>
