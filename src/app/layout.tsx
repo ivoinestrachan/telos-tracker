@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TRACK TELOS HOUSE",
-  description: "TRACK TELOS HOUSE ON THEIR WAY TO SLUSH",
+  title: "Telos House – The Slush Caravan 2025",
+  description: "Join us on our journey to Slush 2025!",
 };
 
 export default function RootLayout({
