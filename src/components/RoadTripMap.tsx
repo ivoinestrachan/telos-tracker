@@ -23,6 +23,7 @@ export default function RoadTripMap() {
   const [showWaitlist, setShowWaitlist] = useState(false);
   const [code, setCode] = useState(['', '', '', '']);
   const [isStale, setIsStale] = useState(false);
+  const [isRouteExpanded, setIsRouteExpanded] = useState(false);
   const currentMarkerRef = useRef<maplibregl.Marker | null>(null);
   const lastAddressLookupTime = useRef(0);
   const lastAddressCoords = useRef<[number, number] | null>(null);
@@ -560,8 +561,20 @@ export default function RoadTripMap() {
             )}
           </div>
 
-          <div className="text-[10px] sm:text-xs text-red-500 mb-2 tracking-wider">[ROUTE]</div>
-          <div className="flex flex-col gap-1.5 text-[10px] sm:text-xs text-red-400 max-h-40 sm:max-h-64 overflow-y-auto">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-[10px] sm:text-xs text-red-500 tracking-wider">[ROUTE]</div>
+            <button
+              onClick={() => setIsRouteExpanded(!isRouteExpanded)}
+              className="sm:hidden text-red-500 transition-transform duration-200"
+              style={{ transform: isRouteExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              aria-label="Toggle route"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+          <div className={`flex-col gap-1.5 text-[10px] sm:text-xs text-red-400 max-h-40 sm:max-h-64 overflow-y-auto ${isRouteExpanded ? 'flex' : 'hidden sm:flex'}`}>
             {routeLocations.map((loc, idx) => (
               <div key={idx} className="flex items-center gap-2">
                 <div
