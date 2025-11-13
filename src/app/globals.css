@@ -1,15 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
+  --font-cocogoose: var(--font-cocogoose);
+  --font-nevanta-bold: var(--font-nevanta-bold);
+  --font-bebas-neue: var(--font-bebas-neue);
+  --font-inter: var(--font-inter);
+  --font-heming-variable: var(--font-heming-variable);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +27,31 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1.5s ease-out forwards;
+}
+
+.animate-fade-in-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 2s ease-out, transform 2s ease-out;
+}
+
+.animate-fade-in-scroll.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
 }

@@ -1,250 +1,265 @@
 "use client";
 
 import Image from "next/image";
-import vice from "../../assets/vicenews.svg";
+import vice from "../../assets/vicelogo.svg";
 import slush from "../../assets/slush.svg";
 import supercell from "../../assets/supercell.svg";
-import { useState } from "react";
+import BackgroundMap from "@/components/BackgroundMap";
+import { useEffect } from "react";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-  return (
-    <div className="min-h-screen bg-black text-red-400 font-mono p-4 sm:p-6 md:p-8 lg:p-12">
-      <div className="max-w-6xl mx-auto">
-        <div className="border-4 border-red-500 bg-black p-4 sm:p-6 md:p-8 lg:p-10 shadow-[0_0_50px_rgba(255,0,0,0.3)]">
-          <div className="border-2 border-red-500 bg-red-500 text-black text-center py-3 sm:py-4 mb-6 sm:mb-8">
-            <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-widest">
-              /// Restricted ///
-            </div>
-            <div className="text-xs sm:text-sm md:text-base lg:text-lg mt-2 tracking-wider">
-              CLASSIFIED INFORMATION - UNAUTHORIZED ACCESS PROHIBITED
-            </div>
-          </div>
+  useEffect(() => {
+    const observers = new Map();
 
-          {/* WHAT THIS IS - Most Important Info First */}
-          <div className=" ">
-            <div className="mb-6 sm:mb-8">
-              <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6">
-                &gt; TELOS CARAVAN TO SLUSH
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("fade-in-visible");
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, {
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px",
+    });
+
+    const elements = document.querySelectorAll(".animate-fade-in-scroll");
+    elements.forEach((el) => {
+      observer.observe(el);
+      observers.set(el, observer);
+    });
+
+    return () => {
+      observers.forEach((obs) => obs.disconnect());
+    };
+  }, []);
+
+  return (
+    <>
+      <BackgroundMap />
+      <div className="min-h-screen text-white font-inter p-4 sm:p-6 md:p-8 lg:p-12 relative z-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="p-4 sm:p-6 md:p-8 lg:p-10">
+            {/* Hero Section */}
+            <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 animate-fade-in-scroll">
+              <div className="text-center max-w-5xl w-full">
+                <h1 className="font-heming-variable text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-normal mb-6 sm:mb-8 md:mb-10 lg:mb-12 leading-[1.1] sm:leading-tight drop-shadow-[0_4px_20px_rgba(0,0,0,1)] [text-shadow:2px_2px_8px_rgb(0_0_0/100%),-2px_-2px_8px_rgb(0_0_0/100%),2px_-2px_8px_rgb(0_0_0/100%),-2px_2px_8px_rgb(0_0_0/100%)]">
+                  Telos Caravan: <br />
+                  London To Helsinki
+                </h1>
               </div>
             </div>
 
-            {/* Live Tracking Button - First */}
-            <div className="mb-6 sm:mb-8">
-              <a
-                href="/track"
-                className="block w-full border-2 border-red-500 bg-red-500/20 hover:bg-red-500 text-red-500 hover:text-black py-4 sm:py-5 md:py-6 text-center font-bold tracking-widest transition-all duration-200 text-base sm:text-lg md:text-xl lg:text-2xl cursor-pointer group"
-              >
-                <div className="flex items-center justify-center gap-2 sm:gap-3">
-                  <span className="text-red-500 group-hover:text-black text-xl sm:text-2xl">▶</span>
-                  <span>TRACK THE CARAVAN LIVE</span>
-                  <span className="text-red-500 group-hover:text-black text-xl sm:text-2xl">◀</span>
-                </div>
-              </a>
-            </div>
-
-            {/* Journey Description - Collapsible Dropdown */}
-            <div className="mb-2 sm:mb-2">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full border-2 border-red-500/50 bg-red-500/5 hover:bg-red-500/10 text-red-400 py-3 sm:py-4 px-4 sm:px-5 md:px-6 text-left font-bold tracking-wide transition-all duration-200 text-sm sm:text-base md:text-lg cursor-pointer flex items-center justify-between"
-              >
-                <span>THE JOURNEY TO SLUSH</span>
-                <span className={`text-xl sm:text-2xl transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}>
-                  ▶
-                </span>
-              </button>
-
-              {isOpen && (
-                <div className="border-2 border-red-500/30 border-t-0 bg-red-500/5 p-4 sm:p-5 md:p-6 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
-                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl">
-                    EUROPE&apos;S BRIGHTEST FOUNDERS TRAVELING BY CARAVAN FROM LONDON TO HELSINKI FOR A 80-HOUR ADVENTURE PACKED JOURNEY TO SLUSH 2025 - THE WORLD&apos;S LARGEST FOUNDER EVENT
+            {/* What is This Section */}
+            <div className="flex items-center justify-center py-12 sm:py-16 ">
+              <div className="bg-black/40 p-6 sm:p-8 md:p-10 lg:p-12 border border-white/20 w-full max-w-6xl animate-fade-in-scroll shadow-[0_8px_32px_rgba(0,0,0,0.8)]">
+                <h2 className="font-bebas-neue text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-wider mb-6 sm:mb-8 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] text-center">
+                  AN EPIC JOURNEY ACROSS EUROPE
+                </h2>
+                <div className="space-y-4 sm:space-y-6 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] text-center px-2 sm:px-4">
+                  <p className="leading-relaxed">
+                    Join us on an unforgettable 80-hour caravan journey from
+                    London to Helsinki. We&apos;re taking a caravan across
+                    Europe, exploring iconic sites and vibrant cities along the
+                    way to Slush 2025.
+                  </p>
+                  <p className="leading-relaxed">
+                    Travel alongside ambitious founders, developers, and
+                    innovators. Experience Paris, Zurich, Munich, Berlin, and
+                    Stockholm, all while heading toward the world&apos;s leading
+                    startup conference.
                   </p>
                 </div>
-              )}
-            </div>
-
-          </div>
-
-          <div className="space-y-6 sm:space-y-8 mt-4">
-            <div>
-              <div className="text-red-500 text-sm sm:text-base md:text-lg lg:text-xl  tracking-wider font-bold">
-                [MISSION OBJECTIVES]
-              </div>
-              <div className="pl-3 sm:pl-4 space-y-2 sm:space-y-3 text-sm sm:text-base md:text-lg">
-                <div className="flex gap-2 sm:gap-3">
-                  <span className="text-red-500 text-lg sm:text-xl">&gt;</span>
-                  <span>CONQUER EUROPE</span>
-                </div>
-                <div className="flex gap-2 sm:gap-3">
-                  <span className="text-red-500 text-lg sm:text-xl">&gt;</span>
-                  <span>CONQUER THE WORLD&apos;S LARGEST FOUNDER EVENT</span>
+                <div className="mt-8 sm:mt-10 text-center px-2">
+                  <a
+                    href="/track"
+                    className="inline-block bg-white hover:bg-white/90 text-black px-5 sm:px-8 md:px-12 lg:px-16 py-3 sm:py-4 md:py-5 lg:py-6 font-bold tracking-widest transition-all duration-200 text-xs sm:text-sm md:text-base lg:text-xl xl:text-2xl cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.5)] w-full sm:w-auto max-w-md"
+                  >
+                    TRACK THE CARAVAN LIVE →
+                  </a>
                 </div>
               </div>
             </div>
 
-            <div>
-              <div className="text-red-500 text-sm sm:text-base md:text-lg lg:text-xl mb-4 sm:mb-6 tracking-wider font-bold">
-                [PARTNERS]
-              </div>
-              <div className="bg-red-500/10 border-2 border-red-500/30 p-4 sm:p-6 md:p-8">
-                <div className="flex flex-wrap justify-center gap-6 sm:gap-10 md:gap-16 items-center">
+            <div className="space-y-12 sm:space-y-20 py-12 sm:py-16 text-center">
+              <div className="animate-fade-in-scroll bg-black/40 p-5 sm:p-8 md:p-10 lg:p-12 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.8)]">
+                <div className="font-bebas-neue text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-wider mb-6 sm:mb-8 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] text-center">
+                  PARTNERS
+                </div>
+                <div className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12 lg:gap-16 items-center px-2">
                   <a
                     href="https://vice.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 transition-all hover:scale-105"
+                    className="transition-all hover:scale-105"
                   >
                     <Image
                       src={vice}
                       alt="VICE NEWS"
-                      className="h-8 sm:h-10 md:h-12 lg:h-16 w-auto"
+                      className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
                     />
                   </a>
                   <a
                     href="https://slush.org"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 sm:px-6 md:px-8 py-4 sm:py-5 md:py-6 transition-all hover:scale-105"
+                    className="transition-all hover:scale-105"
                   >
                     <Image
                       src={slush}
                       alt="SLUSH"
-                      className="h-8 sm:h-10 md:h-12 lg:h-16 w-auto"
+                      className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
                     />
                   </a>
                   {/* Supercell Logo
+                <a
+                  href="https://supercell.com/en/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white px-8 py-6 transition-all hover:scale-105"
+                >
+                  <Image
+                    src={supercell}
+                    alt="SUPERCELL"
+                    className="h-12 md:h-16 w-auto"
+                  />
+                </a>
+                */}
+                </div>
+
+                <div className="mt-8 sm:mt-10 text-center px-2">
                   <a
-                    href="https://supercell.com/en/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-white px-8 py-6 transition-all hover:scale-105"
+                    href=""
+                    className="inline-block bg-white hover:bg-white/90 text-black px-5 sm:px-8 md:px-12 lg:px-16 py-3 sm:py-4 md:py-5 lg:py-6 font-bold tracking-widest transition-all duration-200 text-xs sm:text-sm md:text-base lg:text-xl xl:text-2xl cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.5)] w-full sm:w-auto max-w-md"
                   >
-                    <Image
-                      src={supercell}
-                      alt="SUPERCELL"
-                      className="h-12 md:h-16 w-auto"
-                    />
+                    BECOME A SPONSOR
                   </a>
-                  */}
+                </div>
+              </div>
+
+              <div className="animate-fade-in-scroll bg-black/40 p-5 sm:p-8 md:p-10 lg:p-12 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.8)]">
+                <div className="font-heming-variable text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-wider mb-4 sm:mb-6 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] text-center">
+                  THE ROUTE
+                </div>
+                <div className="relative drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] max-w-2xl mx-auto px-2">
+                  {/* Route Visualization */}
+                  <div className="space-y-1 sm:space-y-1.5">
+                    {/* London */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full bg-white border-2 border-white"></div>
+                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg font-bold leading-tight text-white">
+                        TELOS HQ, KINGS CROSS, LONDON
+                      </span>
+                    </div>
+
+                    {/* Paris */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
+                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
+                        PARIS
+                      </span>
+                    </div>
+
+                    {/* Zurich */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
+                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
+                        ZURICH
+                      </span>
+                    </div>
+
+                    {/* Liechtenstein */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
+                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
+                        LIECHTENSTEIN
+                      </span>
+                    </div>
+
+                    {/* Munich */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
+                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
+                        MUNICH
+                      </span>
+                    </div>
+
+                    {/* Berlin */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
+                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
+                        BERLIN
+                      </span>
+                    </div>
+
+                    {/* Stockholm */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
+                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
+                        STOCKHOLM
+                      </span>
+                    </div>
+
+                    {/* Helsinki - Final destination */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full bg-white border-2 border-white"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg font-bold text-white">
+                        HELSINKI
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div>
-              <div className="text-red-500 text-sm sm:text-base md:text-lg lg:text-xl mb-3 sm:mb-4 tracking-wider font-bold">
-                [THE ROUTE]
-              </div>
-              <div className="pl-2 sm:pl-3 md:pl-4 relative">
-                {/* Train Route Visualization */}
-                <div className="space-y-1.5 sm:space-y-2">
-                  {/* London */}
-                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                    <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-red-500 border-2 border-red-500"></div>
-                      <div className="w-0.5 h-12 sm:h-14 md:h-16 bg-red-500/50"></div>
-                    </div>
-                    <span className="text-sm sm:text-base md:text-lg font-bold leading-tight">
-                      TELOS HQ, KINGS CROSS, LONDON
-                    </span>
-                  </div>
-
-                  {/* Paris */}
-                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                    <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-red-500 bg-black"></div>
-                      <div className="w-0.5 h-12 sm:h-14 md:h-16 bg-red-500/50"></div>
-                    </div>
-                    <span className="text-sm sm:text-base md:text-lg">PARIS</span>
-                  </div>
-
-                  {/* Zurich */}
-                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                    <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-red-500 bg-black"></div>
-                      <div className="w-0.5 h-12 sm:h-14 md:h-16 bg-red-500/50"></div>
-                    </div>
-                    <span className="text-sm sm:text-base md:text-lg">ZURICH</span>
-                  </div>
-
-                  {/* Liechtenstein */}
-                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                    <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-red-500 bg-black"></div>
-                      <div className="w-0.5 h-12 sm:h-14 md:h-16 bg-red-500/50"></div>
-                    </div>
-                    <span className="text-sm sm:text-base md:text-lg">LIECHTENSTEIN</span>
-                  </div>
-
-                  {/* Munich */}
-                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                    <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-red-500 bg-black"></div>
-                      <div className="w-0.5 h-12 sm:h-14 md:h-16 bg-red-500/50"></div>
-                    </div>
-                    <span className="text-sm sm:text-base md:text-lg">MUNICH</span>
-                  </div>
-
-                  {/* Berlin */}
-                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                    <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-red-500 bg-black"></div>
-                      <div className="w-0.5 h-12 sm:h-14 md:h-16 bg-red-500/50"></div>
-                    </div>
-                    <span className="text-sm sm:text-base md:text-lg">BERLIN</span>
-                  </div>
-
-                  {/* Stockholm */}
-                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                    <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-red-500 bg-black"></div>
-                      <div className="w-0.5 h-12 sm:h-14 md:h-16 bg-red-500/50"></div>
-                    </div>
-                    <span className="text-sm sm:text-base md:text-lg">STOCKHOLM</span>
-                  </div>
-
-                  {/* Helsinki - Final destination */}
-                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                    <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-red-500 border-2 border-red-500"></div>
-                    </div>
-                    <span className="text-sm sm:text-base md:text-lg font-bold">HELSINKI</span>
-                  </div>
+            <div className="space-y-6 py-12 sm:py-16 text-center px-4">
+              <div className="animate-fade-in-scroll">
+                <div className="font-heming-variable text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl tracking-wider mb-6 sm:mb-8 drop-shadow-[0_4px_20px_rgba(0,0,0,1)] [text-shadow:2px_2px_8px_rgb(0_0_0/100%),-2px_-2px_8px_rgb(0_0_0/100%),2px_-2px_8px_rgb(0_0_0/100%),-2px_2px_8px_rgb(0_0_0/100%)]">
+                  CONTACT
                 </div>
-              </div>
-            </div>
-
-            <div>
-              <div className="text-red-500 text-sm sm:text-base md:text-lg lg:text-xl mb-3 sm:mb-4 tracking-wider font-bold">
-                [CONTACT]
-              </div>
-              <div className="pl-3 sm:pl-4 text-sm sm:text-base md:text-lg">
-                <div className="flex gap-2 sm:gap-3">
-                  <span className="text-red-500 text-lg sm:text-xl">&gt;</span>
+                <div className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl drop-shadow-[0_4px_20px_rgba(0,0,0,1)] [text-shadow:1px_1px_6px_rgb(0_0_0/100%),-1px_-1px_6px_rgb(0_0_0/100%),1px_-1px_6px_rgb(0_0_0/100%),-1px_1px_6px_rgb(0_0_0/100%)] break-all sm:break-normal">
                   <a
                     href="mailto:team@teloshouse.com"
-                    className="hover:text-red-300 transition-colors underline break-all"
+                    className="hover:text-gray-300 transition-colors underline"
                   >
                     team@teloshouse.com
                   </a>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="border-2 border-red-500 bg-red-500 text-black text-center py-2 sm:py-3 mt-8 sm:mt-10">
-            <div className="text-xs sm:text-sm md:text-base lg:text-lg font-bold tracking-widest">
-              TOP SECRET // SPECIAL ACCESS REQUIRED
+            <div className="mt-4 sm:mt-6 pb-6 text-[10px] xs:text-xs sm:text-sm md:text-base text-white/70 flex flex-col md:flex-row justify-center gap-1 sm:gap-2 md:gap-4 text-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] animate-fade-in-scroll px-4">
+              <div>DOC_REV: 1.0</div>
+              <div>ISSUED: NOV 2025</div>
+              <div>AUTHORITY: TELOS_HOUSE</div>
             </div>
-          </div>
-
-          <div className="mt-4 sm:mt-6 text-xs sm:text-sm md:text-base text-red-500/50 flex flex-col md:flex-row justify-between gap-1 sm:gap-2 text-center md:text-left">
-            <div>DOC_REV: 1.0</div>
-            <div>ISSUED: NOV 2025</div>
-            <div>AUTHORITY: TELOS_HOUSE</div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
