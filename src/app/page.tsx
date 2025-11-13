@@ -146,7 +146,7 @@ export default function Home() {
 
                 <div className="mt-8 sm:mt-10 text-center px-2">
                   <a
-                    href=""
+                    href="mailto:team@teloshouse.com?subject=Sponsorship"
                     className="inline-block bg-white hover:bg-white/90 text-black px-5 sm:px-8 md:px-12 lg:px-16 py-3 sm:py-4 md:py-5 lg:py-6 font-bold tracking-widest transition-all duration-200 text-xs sm:text-sm md:text-base lg:text-xl xl:text-2xl cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.5)] w-full sm:w-auto max-w-md"
                   >
                     BECOME A SPONSOR
