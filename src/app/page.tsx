@@ -7,6 +7,7 @@ import supercell from "../../assets/supercell.svg";
 import BackgroundMap from "@/components/BackgroundMap";
 import { useEffect } from "react";
 import cloud from "../../assets/cloud.svg"
+import openai from "../../assets/openai.svg"
 
 export default function Home() {
   useEffect(() => {
@@ -56,20 +57,14 @@ export default function Home() {
             <div className="flex items-center justify-center py-12 sm:py-16 ">
               <div className="bg-black/40 p-6 sm:p-8 md:p-10 lg:p-12 border border-white/20 w-full max-w-6xl animate-fade-in-scroll shadow-[0_8px_32px_rgba(0,0,0,0.8)]">
                 <h2 className="font-bebas-neue text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-wider mb-6 sm:mb-8 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] text-center">
-                  AN EPIC JOURNEY ACROSS EUROPE
+                 THE TECH PILGRIMAGE ACROSS EUROPE 
                 </h2>
                 <div className="space-y-4 sm:space-y-6 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] text-center px-2 sm:px-4">
                   <p className="leading-relaxed">
-                    Join us on an unforgettable 80-hour caravan journey from
-                    London to Helsinki. We&apos;re taking a caravan across
-                    Europe, exploring iconic sites and vibrant cities along the
-                    way to Slush 2025.
+                  Telos House is taking a bus of ~30 founders from London to Helsinki, picking up operators and VCs across Europe on the way.
                   </p>
                   <p className="leading-relaxed">
-                    Travel alongside ambitious founders, developers, and
-                    innovators. Experience Paris, Zurich, Munich, Berlin, and
-                    Stockholm, all while heading toward the world&apos;s leading
-                    startup conference.
+                  We’ll visit the centres of European innovation, before our final stop at the Slush conference.
                   </p>
                 </div>
                 <div className="mt-8 sm:mt-10 text-center px-2">
@@ -123,6 +118,19 @@ export default function Home() {
                     <Image
                       src={cloud}
                       alt="google cloud"
+                      className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
+                    />
+                  </a>
+
+                    <a
+                    href="https://openai.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-all hover:scale-105"
+                  >
+                    <Image
+                      src={openai}
+                      alt="openai"
                       className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
                     />
                   </a>
