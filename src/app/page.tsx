@@ -6,6 +6,7 @@ import slush from "../../assets/slush.svg";
 import supercell from "../../assets/supercell.svg";
 import BackgroundMap from "@/components/BackgroundMap";
 import { useEffect } from "react";
+import cloud from "../../assets/cloud.svg"
 
 export default function Home() {
   useEffect(() => {
@@ -112,6 +113,19 @@ export default function Home() {
                       className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
                     />
                   </a>
+
+                   <a
+                    href="https://cloud.google.com/?hl=en"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-all hover:scale-105"
+                  >
+                    <Image
+                      src={cloud}
+                      alt="google cloud"
+                      className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
+                    />
+                  </a>
                   {/* Supercell Logo
                 <a
                   href="https://supercell.com/en/"
@@ -126,6 +140,8 @@ export default function Home() {
                   />
                 </a>
                 */}
+
+                
                 </div>
 
                 <div className="mt-8 sm:mt-10 text-center px-2">
