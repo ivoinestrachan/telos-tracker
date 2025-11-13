@@ -46,8 +46,8 @@ export default function Home() {
             <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 animate-fade-in-scroll">
               <div className="text-center max-w-5xl w-full">
                 <h1 className="font-heming-variable text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-normal mb-6 sm:mb-8 md:mb-10 lg:mb-12 leading-[1.1] sm:leading-tight drop-shadow-[0_4px_20px_rgba(0,0,0,1)] [text-shadow:2px_2px_8px_rgb(0_0_0/100%),-2px_-2px_8px_rgb(0_0_0/100%),2px_-2px_8px_rgb(0_0_0/100%),-2px_2px_8px_rgb(0_0_0/100%)]">
-                  Telos Caravan: <br />
-                  London To Helsinki
+                  Telos Road Trip: <br />
+                  London To Slush
                 </h1>
               </div>
             </div>
