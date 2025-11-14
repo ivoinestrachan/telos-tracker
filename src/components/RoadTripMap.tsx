@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
+import Image from 'next/image';
+import slush from "../../assets/slush.svg"
 
 interface Location {
   name: string;
@@ -546,6 +548,19 @@ export default function RoadTripMap() {
                   <div className="text-red-500 font-mono text-[10px] sm:text-xs md:text-sm lg:text-base tracking-[0.2em] sm:tracking-[0.3em] mb-1 sm:mb-2 md:mb-4 animate-pulse">
                     [MISSION BRIEFING]
                   </div>
+
+                  {/* SLUSH Logo */}
+                  <div className="flex justify-center mb-3 sm:mb-6 md:mb-8">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-red-500/20 blur-xl animate-pulse"></div>
+                      <Image
+                        src={slush}
+                        alt="SLUSH"
+                        className="relative w-32 sm:w-48 md:w-64 lg:w-80 xl:w-96 h-auto drop-shadow-[0_0_20px_rgba(255,0,0,0.8)] animate-glow"
+                      />
+                    </div>
+                  </div>
+
                   <div className="text-white font-mono text-base sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl tracking-wide sm:tracking-wider mb-1 sm:mb-2 md:mb-4 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]">
                     &gt; CARAVAN DEPARTURE
                   </div>
