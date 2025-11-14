@@ -30,7 +30,7 @@ export default function RoadTripMap() {
   const lastAddressLookupTime = useRef(0);
   const lastAddressCoords = useRef<[number, number] | null>(null);
 
-  const departureDate = new Date('2025-11-14T20:30:00')
+  const departureDate = new Date('2025-11-14T21:30:00')
 
   const routeLocations: Location[] = [
     { name: 'Berlin, Germany', coords: [13.4050, 52.5200], type: 'waypoint' },
@@ -658,9 +658,9 @@ export default function RoadTripMap() {
       <div className="absolute top-12 sm:top-14 right-2 sm:right-4 z-40 pointer-events-auto">
         <button
           onClick={() => setShowCodeEntry(true)}
-          className={`${countdownExpired ? '' : 'hidden'} px-2 py-1.5 sm:px-4 sm:py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded text-[10px] sm:text-xs text-red-300 hover:text-red-200 transition-colors cursor-pointer font-bold whitespace-nowrap font-mono`}
+          className={`${countdownExpired ? '' : 'hidden'} relative px-4 py-2.5 sm:px-6 sm:py-3 bg-black/90 hover:bg-black border-2 border-red-500 rounded text-sm sm:text-base text-red-100 hover:text-white transition-all cursor-pointer font-bold whitespace-nowrap font-mono shadow-[0_0_20px_rgba(255,0,0,0.4)] hover:shadow-[0_0_30px_rgba(255,0,0,0.6)] backdrop-blur-sm`}
         >
-          &gt; JOIN_WAITLIST
+          <span className="relative z-10">&gt; JOIN THE CARAVAN</span>
         </button>
       </div>
 
