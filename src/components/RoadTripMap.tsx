@@ -28,7 +28,7 @@ export default function RoadTripMap() {
   const lastAddressLookupTime = useRef(0);
   const lastAddressCoords = useRef<[number, number] | null>(null);
 
-  const departureDate = new Date('2025-11-14T18:00:00')
+  const departureDate = new Date('2025-11-14T19:00:00')
 
   const routeLocations: Location[] = [
     { name: 'Berlin, Germany', coords: [13.4050, 52.5200], type: 'waypoint' },
