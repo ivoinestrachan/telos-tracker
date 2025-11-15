@@ -177,7 +177,7 @@ export default function RoadTripMap() {
 
     fetchSharedLocation();
 
-    const interval = setInterval(fetchSharedLocation, 3000);
+    const interval = setInterval(fetchSharedLocation, 60000); // Poll every 60 seconds (1 minute)
 
     return () => {
       clearInterval(interval);

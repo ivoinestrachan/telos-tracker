@@ -39,7 +39,7 @@ export default function LaunchPage() {
     };
 
     fetchActiveTrackers();
-    const interval = setInterval(fetchActiveTrackers, 3000); // Poll every 3 seconds
+    const interval = setInterval(fetchActiveTrackers, 60000); // Poll every 60 seconds (1 minute)
 
     return () => clearInterval(interval);
   }, []);
