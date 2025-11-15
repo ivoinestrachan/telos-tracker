@@ -39,6 +39,7 @@ export default function RoadTripMap() {
   const [code, setCode] = useState(['', '', '', '']);
   const [isStale, setIsStale] = useState(false);
   const [isRouteExpanded, setIsRouteExpanded] = useState(false);
+  const [isTrackerExpanded, setIsTrackerExpanded] = useState(false);
   const trackerMarkersRef = useRef<Map<string, maplibregl.Marker>>(new Map());
   const lastAddressLookup = useRef<Map<string, number>>(new Map());
   const lastAddressCoords = useRef<Map<string, [number, number]>>(new Map());
@@ -799,16 +800,32 @@ export default function RoadTripMap() {
           <div className="text-lg sm:text-2xl font-bold text-red-500 mb-2 sm:mb-3 tracking-wider">&gt; TO SLUSH</div>
 
           <div className="text-xs sm:text-sm text-red-400 mb-3 sm:mb-4">
-            <span className="text-red-500 text-[10px] sm:text-xs">[TRACKED_LOCATIONS]</span>
-            <br />
-            <span className="text-red-300 text-xs sm:text-sm wrap-break-word">{currentLocation}</span>
-            {isStale && (
-              <span className="text-yellow-400 text-[10px] sm:text-xs ml-1">(Some trackers offline)</span>
-            )}
+            <div className="flex items-center justify-between mb-2">
+              <div>
+                <span className="text-red-500 text-[10px] sm:text-xs">[TRACKED_LOCATIONS]</span>
+                <br />
+                <span className="text-red-300 text-xs sm:text-sm wrap-break-word">{currentLocation}</span>
+                {isStale && (
+                  <span className="text-yellow-400 text-[10px] sm:text-xs ml-1">(Some trackers offline)</span>
+                )}
+              </div>
+              {trackerLocations.length > 0 && (
+                <button
+                  onClick={() => setIsTrackerExpanded(!isTrackerExpanded)}
+                  className="sm:hidden text-red-500 transition-transform duration-200"
+                  style={{ transform: isTrackerExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                  aria-label="Toggle trackers"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              )}
+            </div>
             {trackerLocations.length > 0 && (
               <>
                 {/* Display active trackers */}
-                <div className="mt-2 space-y-3">
+                <div className={`mt-2 space-y-3 ${isTrackerExpanded ? 'block' : 'hidden sm:block'}`}>
                   {trackerLocations.map(tracker => {
                     const trackerConfig = TRACKERS.find(t => t.id === tracker.trackerId);
                     const label = trackerConfig?.label || tracker.trackerId;
