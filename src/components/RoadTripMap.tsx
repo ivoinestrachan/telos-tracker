@@ -31,7 +31,7 @@ export default function RoadTripMap() {
   const lastAddressLookupTime = useRef(0);
   const lastAddressCoords = useRef<[number, number] | null>(null);
 
-  const departureDate = new Date('2025-11-15T00:00:00')
+  const departureDate = new Date('2025-11-15T02:00:00')
 
   const routeLocations: Location[] = [
     { name: 'Antwerp, Belgium', coords: [4.4025, 51.2194], type: 'waypoint' },
