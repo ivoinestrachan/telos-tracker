@@ -121,19 +121,6 @@ export default function Home() {
                       className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
                     />
                   </a>
-
-                    <a
-                    href="https://openai.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-all hover:scale-105"
-                  >
-                    <Image
-                      src={openai}
-                      alt="openai"
-                      className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
-                    />
-                  </a>
                   {/* Supercell Logo
                 <a
                   href="https://supercell.com/en/"
