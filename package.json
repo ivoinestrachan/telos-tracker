@@ -9,13 +9,15 @@
     "postinstall": "npx prisma generate"
   },
   "dependencies": {
+    "@formspree/react": "^3.0.0",
     "@prisma/client": "^6.19.0",
     "framer-motion": "^12.23.24",
     "maplibre-gl": "^5.12.0",
     "next": "16.0.1",
     "prisma": "^6.19.0",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "react-phone-number-input": "^3.4.14"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
