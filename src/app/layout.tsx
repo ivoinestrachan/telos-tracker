@@ -40,28 +40,19 @@ const hemingVariable = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Answer the Call",
-  description: "Welcome to the Telos House switchboard. Begin your journey and make the right choices.",
+  title: "Telos House – The Slush Caravan 2025",
+  description: "Join us on our journey to Slush 2025!",
   metadataBase: new URL('https://slush.teloshouse.com'),
   openGraph: {
-    title: "Answer the Call",
-    description: "Welcome to the Telos House switchboard. Begin your journey and make the right choices.",
-    images: [
-      {
-        url: '/public/images/phone-removebg-preview.png',
-        width: 800,
-        height: 800,
-        alt: 'Telos House Phone',
-      }
-    ],
+    title: "Telos House – The Slush Caravan 2025",
+    description: "Join us on our journey to Slush 2025!",
     type: 'website',
     siteName: 'Telos House',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Answer the Call",
-    description: "Welcome to the Telos House switchboard. Begin your journey and make the right choices.",
-    images: ['/public/images/phone-removebg-preview.png'],
+    title: "Telos House – The Slush Caravan 2025",
+    description: "Join us on our journey to Slush 2025!",
   },
 };
 
