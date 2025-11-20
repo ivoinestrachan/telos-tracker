@@ -14,6 +14,7 @@ export default function EventPage() {
   const [showPhoneInput, setShowPhoneInput] = useState(false);
   const [showShutters, setShowShutters] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>('');
+  const [consent, setConsent] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [state, handleSubmit] = useForm('xanvjzwn');
 
@@ -71,6 +72,7 @@ export default function EventPage() {
         // Submit to Formspree
         const formData = new FormData();
         formData.append('phone', phoneNumber || '');
+        formData.append('consent', consent.toString());
         formData.append('timestamp', new Date().toISOString());
         
         const result = await handleSubmit(formData as any);
@@ -114,28 +116,46 @@ export default function EventPage() {
           />
           {showPhoneInput && (
             <form onSubmit={handlePhoneSubmit} className="flex flex-col items-center gap-4 w-full max-w-md">
-              <div className="flex items-center gap-2 w-full">
-                <div className="flex-1">
-                  <PhoneInput
-                    international
-                    defaultCountry="US"
-                    value={phoneNumber}
-                    onChange={setPhoneNumber}
-                    placeholder="Enter phone number"
-                    className="phone-input"
-                    name="phone"
-                  />
-                </div>
-                {phoneNumber && phoneNumber.length > 0 && (
-                  <button
-                    type="submit"
-                    disabled={state.submitting}
-                    className="text-white text-2xl hover:opacity-70 transition-opacity cursor-pointer disabled:opacity-30"
-                  >
-                    {state.submitting ? '...' : '→'}
-                  </button>
-                )}
+              <div className="flex-1 w-full">
+                <PhoneInput
+                  international
+                  defaultCountry="US"
+                  value={phoneNumber}
+                  onChange={setPhoneNumber}
+                  placeholder="Enter phone number"
+                  className="phone-input"
+                  name="phone"
+                />
               </div>
+              
+              <div className="flex flex-col gap-3 w-full">
+                <label className="flex items-start gap-3 text-white text-sm cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    className="mt-1 cursor-pointer accent-white"
+                  />
+                  <span>
+                    I consent to receiving an automated pre-recorded phone call containing information about this event. This call is not marketing and is only for this purpose.
+                  </span>
+                </label>
+                
+                <p className="text-gray-400 text-xs leading-relaxed">
+                  By submitting your number, you agree to receive a single automated informational call. Your number will not be used for marketing or stored beyond what is necessary for this event.
+                </p>
+              </div>
+              
+              {phoneNumber && phoneNumber.length > 0 && consent && (
+                <button
+                  type="submit"
+                  disabled={state.submitting}
+                  className="text-white text-lg border border-white px-6 py-2 hover:bg-white hover:text-black transition-all cursor-pointer disabled:opacity-30 w-full"
+                >
+                  {state.submitting ? 'submitting...' : 'submit'}
+                </button>
+              )}
+              
               {submitError && (
                 <p className="text-red-500 text-sm">{submitError}</p>
               )}
