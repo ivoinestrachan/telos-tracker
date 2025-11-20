@@ -42,7 +42,7 @@ export default function EventPage() {
         <SequentialTypewriter 
           lines={[
             'good choice',
-            'expect a call at 1600'
+            'expect a call soon'
           ]}
           speed={50}
           jitter={20}
