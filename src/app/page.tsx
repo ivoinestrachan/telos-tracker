@@ -8,6 +8,7 @@ import BackgroundMap from "@/components/BackgroundMap";
 import { useEffect } from "react";
 import cloud from "../../assets/cloud.svg"
 import openai from "../../assets/openai.svg"
+import stix from "../../assets/stix3.svg"
 
 export default function Home() {
   useEffect(() => {
@@ -121,20 +122,20 @@ export default function Home() {
                       className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
                     />
                   </a>
-                  {/* Supercell Logo
+              
                 <a
-                  href="https://supercell.com/en/"
+                  href="https://stix.co/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white px-8 py-6 transition-all hover:scale-105"
+                  className="transition-all hover:scale-105"
                 >
                   <Image
-                    src={supercell}
-                    alt="SUPERCELL"
-                    className="h-12 md:h-16 w-auto"
+                    src={stix}
+                    alt="stix"
+                    className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
                   />
                 </a>
-                */}
+                
 
                 
                 </div>
