@@ -166,3 +166,40 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const trackerId = searchParams.get('trackerId');
+
+    if (trackerId) {
+      // Delete specific tracker data
+      await prisma.trackerLocation.deleteMany({
+        where: { trackerId },
+      });
+      await prisma.trackerState.delete({
+        where: { trackerId },
+      });
+
+      return NextResponse.json({
+        success: true,
+        message: `Tracker ${trackerId} reset successfully`,
+      });
+    } else {
+      // Delete all tracker data
+      await prisma.trackerLocation.deleteMany({});
+      await prisma.trackerState.deleteMany({});
+
+      return NextResponse.json({
+        success: true,
+        message: 'All trackers reset successfully',
+      });
+    }
+  } catch (error) {
+    console.error('Error resetting trackers:', error);
+    return NextResponse.json(
+      { error: 'Failed to reset trackers' },
+      { status: 500 }
+    );
+  }
+}

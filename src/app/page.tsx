@@ -49,7 +49,7 @@ export default function Home() {
               <div className="text-center max-w-5xl w-full">
                 <h1 className="font-heming-variable text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-normal mb-6 sm:mb-8 md:mb-10 lg:mb-12 leading-[1.1] sm:leading-tight drop-shadow-[0_4px_20px_rgba(0,0,0,1)] [text-shadow:2px_2px_8px_rgb(0_0_0/100%),-2px_-2px_8px_rgb(0_0_0/100%),2px_-2px_8px_rgb(0_0_0/100%),-2px_2px_8px_rgb(0_0_0/100%)]">
                   Telos Road Trip: <br />
-                  London To Slush
+                  Slush To London
                 </h1>
               </div>
             </div>
@@ -62,10 +62,10 @@ export default function Home() {
                 </h2>
                 <div className="space-y-4 sm:space-y-6 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] text-center px-2 sm:px-4">
                   <p className="leading-relaxed">
-                  Telos House is taking a bus of ~30 founders from London to Helsinki, picking up operators and VCs across Europe on the way.
+                  After an epic journey to Slush in Helsinki, Telos House is bringing ~30 founders back home to London, reconnecting with operators and VCs across Europe on the return journey.
                   </p>
                   <p className="leading-relaxed">
-                  We’ll visit the centres of European innovation, before our final stop at the Slush conference.
+                  We're revisiting the centres of European innovation, with our final destination at Telos HQ in King's Cross, London.
                   </p>
                 </div>
                 <div className="mt-8 sm:mt-10 text-center px-2">
@@ -157,58 +157,14 @@ export default function Home() {
                 <div className="relative drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] max-w-2xl mx-auto px-2">
                   {/* Route Visualization */}
                   <div className="space-y-1 sm:space-y-1.5">
-                    {/* London */}
+                    {/* Helsinki */}
                     <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
                       <div className="flex flex-col items-center min-w-4 sm:min-w-5">
                         <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full bg-white border-2 border-white"></div>
                         <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
                       </div>
                       <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg font-bold leading-tight text-white">
-                        TELOS HQ, KINGS CROSS, LONDON
-                      </span>
-                    </div>
-
-                    {/* Antwerp */}
-                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
-                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
-                      </div>
-                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
-                        ANTWERP
-                      </span>
-                    </div>
-
-                    {/* Berlin */}
-                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
-                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
-                      </div>
-                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
-                        BERLIN
-                      </span>
-                    </div>
-
-                    {/* Warsaw */}
-                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
-                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
-                      </div>
-                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
-                        WARSAW
-                      </span>
-                    </div>
-
-                    {/* Riga */}
-                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
-                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
-                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
-                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
-                      </div>
-                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
-                        RIGA
+                        HELSINKI
                       </span>
                     </div>
 
@@ -223,13 +179,57 @@ export default function Home() {
                       </span>
                     </div>
 
-                    {/* Helsinki - Final destination */}
+                    {/* Riga */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
+                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
+                        RIGA
+                      </span>
+                    </div>
+
+                    {/* Warsaw */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
+                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
+                        WARSAW
+                      </span>
+                    </div>
+
+                    {/* Berlin */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
+                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
+                        BERLIN
+                      </span>
+                    </div>
+
+                    {/* Antwerp */}
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+                      <div className="flex flex-col items-center min-w-4 sm:min-w-5">
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full border-2 border-white bg-black"></div>
+                        <div className="w-0.5 h-5 sm:h-8 md:h-10 bg-white/70"></div>
+                      </div>
+                      <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg text-white">
+                        ANTWERP
+                      </span>
+                    </div>
+
+                    {/* London - Final destination */}
                     <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
                       <div className="flex flex-col items-center min-w-4 sm:min-w-5">
                         <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-full bg-white border-2 border-white"></div>
                       </div>
                       <span className="text-[10px] xs:text-xs sm:text-sm md:text-base lg:text-lg font-bold text-white">
-                        HELSINKI
+                        TELOS HQ, KINGS CROSS, LONDON
                       </span>
                     </div>
                   </div>

@@ -44,7 +44,7 @@ export default function RoadTripMap() {
   const [code, setCode] = useState(['', '', '', '']);
   const [isStale, setIsStale] = useState(false);
   const [isRouteExpanded, setIsRouteExpanded] = useState(false);
-  const [isTrackerExpanded, setIsTrackerExpanded] = useState(false);
+  const [isTrackerExpanded, setIsTrackerExpanded] = useState(true);
   const trackerMarkersRef = useRef<Map<string, maplibregl.Marker>>(new Map());
   const lastAddressLookup = useRef<Map<string, number>>(new Map());
   const lastAddressCoords = useRef<Map<string, [number, number]>>(new Map());
@@ -55,33 +55,13 @@ export default function RoadTripMap() {
   const departureDate = new Date('2025-11-15T02:00:00')
 
   const routeLocations: Location[] = [
-    { name: 'King\'s Cross, London', coords: [-0.1246, 51.5308], type: 'waypoint' },
-    { name: 'Antwerp, Belgium', coords: [4.4025, 51.2194], type: 'waypoint' },
-    { name: 'Berlin, Germany', coords: [13.4050, 52.5200], type: 'waypoint' },
-    { name: 'Warsaw, Poland', coords: [21.0122, 52.2297], type: 'waypoint' },
-    { name: 'Riga, Latvia', coords: [24.1052, 56.9496], type: 'waypoint' },
+    { name: 'Helsinki, Finland', coords: [24.9384, 60.1699], type: 'waypoint' },
     { name: 'Tallinn, Estonia', coords: [24.7536, 59.4370], type: 'waypoint' },
-    { name: 'Helsinki, Finland', coords: [24.9384, 60.1699], type: 'destination' },
-  ];
-
-  // Arbitrary fake routes starting from London (for visual interest)
-  const fakeRoutes = [
-    [
-      [-0.1246, 51.5308], // London
-      [-1.4701, 53.3811], // Sheffield
-      [-3.1883, 55.9533], // Edinburgh
-    ],
-    [
-      [-0.1246, 51.5308], // London
-      [1.2921, 52.6309], // Norwich
-      [0.1276, 52.2053], // Cambridge
-      [-0.1246, 51.5308], // Back to London
-    ],
-    [
-      [-0.1246, 51.5308], // London
-      [-2.5879, 51.4545], // Bristol
-      [-3.1791, 51.4816], // Cardiff
-    ],
+    { name: 'Riga, Latvia', coords: [24.1052, 56.9496], type: 'waypoint' },
+    { name: 'Warsaw, Poland', coords: [21.0122, 52.2297], type: 'waypoint' },
+    { name: 'Berlin, Germany', coords: [13.4050, 52.5200], type: 'waypoint' },
+    { name: 'Antwerp, Belgium', coords: [4.4025, 51.2194], type: 'waypoint' },
+    { name: 'King\'s Cross, London', coords: [-0.1246, 51.5308], type: 'destination' },
   ];
 
   useEffect(() => {
@@ -351,48 +331,27 @@ export default function RoadTripMap() {
     if (!map.current) return;
     const coords = routeLocations.map((r) => r.coords);
 
-    // Add main route
-    map.current.addSource('route', {
-      type: 'geojson',
-      data: { type: 'Feature', geometry: { type: 'LineString', coordinates: coords }, properties: {} },
-    });
-
-    map.current.addLayer({
-      id: 'route-line',
-      type: 'line',
-      source: 'route',
-      paint: {
-        'line-color': '#ef4444',
-        'line-width': 5,
-        'line-opacity': 0.7,
-      },
-    });
-
-    // Add fake routes starting from London
-    fakeRoutes.forEach((route, index) => {
-      const sourceId = `fake-route-${index}`;
-      const layerId = `fake-route-line-${index}`;
-
-      map.current!.addSource(sourceId, {
+    // Check if route source already exists, if not add it
+    if (!map.current.getSource('route')) {
+      map.current.addSource('route', {
         type: 'geojson',
-        data: {
-          type: 'Feature',
-          geometry: { type: 'LineString', coordinates: route },
-          properties: {}
-        },
+        data: { type: 'Feature', geometry: { type: 'LineString', coordinates: coords }, properties: {} },
       });
+    }
 
-      map.current!.addLayer({
-        id: layerId,
+    // Check if route layer already exists, if not add it
+    if (!map.current.getLayer('route-line')) {
+      map.current.addLayer({
+        id: 'route-line',
         type: 'line',
-        source: sourceId,
+        source: 'route',
         paint: {
           'line-color': '#ef4444',
-          'line-width': 4,
-          'line-opacity': 0.4,
+          'line-width': 5,
+          'line-opacity': 0.7,
         },
       });
-    });
+    }
   };
 
   const addMarkers = () => {
@@ -409,25 +368,77 @@ export default function RoadTripMap() {
       label.textContent = loc.name;
       label.style.fontSize = '10px';
       label.style.fontWeight = 'bold';
-      label.style.color = '#ff0000';
+      label.style.color = loc.type === 'destination' ? '#00ff00' : '#ff0000';
       label.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
       label.style.padding = '2px 6px';
       label.style.borderRadius = '4px';
-      label.style.border = '1px solid #ff0000';
+      label.style.border = loc.type === 'destination' ? '1px solid #00ff00' : '1px solid #ff0000';
       label.style.whiteSpace = 'nowrap';
       label.style.fontFamily = 'monospace';
-      label.style.textShadow = '0 0 10px #ff0000';
+      label.style.textShadow = loc.type === 'destination' ? '0 0 10px #00ff00' : '0 0 10px #ff0000';
 
-      const dot = document.createElement('div');
-      dot.style.width = loc.type === 'destination' ? '22px' : '16px';
-      dot.style.height = loc.type === 'destination' ? '22px' : '16px';
-      dot.style.background = '#ff0000';
-      dot.style.borderRadius = '50%';
-      dot.style.boxShadow = '0 0 15px #ff0000';
-      dot.style.border = '2px solid #000';
+      // Create destination flag or regular dot
+      if (loc.type === 'destination') {
+        // Create a flag marker for the destination
+        const flagContainer = document.createElement('div');
+        flagContainer.style.position = 'relative';
+        flagContainer.style.width = '40px';
+        flagContainer.style.height = '40px';
 
-      container.appendChild(label);
-      container.appendChild(dot);
+        // Flag pole
+        const pole = document.createElement('div');
+        pole.style.position = 'absolute';
+        pole.style.bottom = '0';
+        pole.style.left = '50%';
+        pole.style.transform = 'translateX(-50%)';
+        pole.style.width = '3px';
+        pole.style.height = '35px';
+        pole.style.backgroundColor = '#ffffff';
+        pole.style.boxShadow = '0 0 10px #00ff00';
+
+        // Flag
+        const flag = document.createElement('div');
+        flag.style.position = 'absolute';
+        flag.style.top = '2px';
+        flag.style.left = '50%';
+        flag.style.width = '20px';
+        flag.style.height = '14px';
+        flag.style.backgroundColor = '#00ff00';
+        flag.style.border = '2px solid #ffffff';
+        flag.style.boxShadow = '0 0 15px #00ff00';
+        flag.style.animation = 'wave 2s ease-in-out infinite';
+        flag.style.transformOrigin = 'left center';
+
+        // Base
+        const base = document.createElement('div');
+        base.style.position = 'absolute';
+        base.style.bottom = '0';
+        base.style.left = '50%';
+        base.style.transform = 'translateX(-50%)';
+        base.style.width = '8px';
+        base.style.height = '8px';
+        base.style.backgroundColor = '#00ff00';
+        base.style.borderRadius = '50%';
+        base.style.boxShadow = '0 0 15px #00ff00';
+        base.style.border = '2px solid #ffffff';
+
+        flagContainer.appendChild(pole);
+        flagContainer.appendChild(flag);
+        flagContainer.appendChild(base);
+        container.appendChild(label);
+        container.appendChild(flagContainer);
+      } else {
+        const dot = document.createElement('div');
+        dot.style.width = '16px';
+        dot.style.height = '16px';
+        dot.style.background = '#ff0000';
+        dot.style.borderRadius = '50%';
+        dot.style.boxShadow = '0 0 15px #ff0000';
+        dot.style.border = '2px solid #000';
+
+        container.appendChild(label);
+        container.appendChild(dot);
+      }
 
       new maplibregl.Marker({ element: container, anchor: 'bottom' })
         .setLngLat(loc.coords)
@@ -732,6 +743,7 @@ export default function RoadTripMap() {
     map.current.fitBounds(bounds, { padding: 100, duration: 1200 });
   };
 
+
   const handleCodeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const correctCode = '2030';
@@ -795,11 +807,11 @@ export default function RoadTripMap() {
   };
 
   const tickerMessages = [
-    'CARAVAN TO SLUSH 2025',
-    'ROUTE: King\'s Cross London → Antwerp → Berlin → Warsaw → Riga → Tallinn → Helsinki',
-    'DESTINATION: SLUSH Conference Finland',
+    'RETURN TO TELOS HQ 2025',
+    'ROUTE: Helsinki → Tallinn → Riga → Warsaw → Berlin → Antwerp → King\'s Cross London',
+    'DESTINATION: TELOS HQ King\'s Cross London',
     'LIVE TRACKING ACTIVE',
-    'Join the adventure of a lifetime',
+    'Join the journey home',
     'Real-time location updates',
     'Network with founders and innovators',
     'Epic stops along the way',
@@ -856,10 +868,10 @@ export default function RoadTripMap() {
                   </div>
 
                   <div className="text-white font-mono text-base sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl tracking-wide sm:tracking-wider mb-1 sm:mb-2 md:mb-4 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]">
-                    &gt; CARAVAN DEPARTURE
+                    &gt; RETURN TO TELOS HQ
                   </div>
                   <div className="text-red-400 font-mono text-[9px] sm:text-xs md:text-sm lg:text-base tracking-wider sm:tracking-widest wrap-break-word px-2">
-                    KING'S CROSS LONDON → ANTWERP → BERLIN → WARSAW → RIGA → TALLINN → HELSINKI
+                    HELSINKI → TALLINN → RIGA → WARSAW → BERLIN → ANTWERP → KING'S CROSS LONDON
                   </div>
                 </div>
 
@@ -929,22 +941,6 @@ export default function RoadTripMap() {
               </div>
             </div>
 
-            {/* Matrix-style falling characters effect */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
-              {[...Array(20)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute text-red-500 font-mono text-xs opacity-50 animate-fall"
-                  style={{
-                    left: `${i * 5}%`,
-                    animationDelay: `${i * 0.1}s`,
-                    animationDuration: `${3 + (i % 3)}s`,
-                  }}
-                >
-                  {String.fromCharCode(33 + Math.random() * 94)}
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       )}
@@ -993,11 +989,11 @@ export default function RoadTripMap() {
 
       <div className="pointer-events-none absolute top-28 sm:top-14 left-2 sm:left-4 right-2 sm:right-auto sm:max-w-md">
         <div className="pointer-events-auto bg-black/95 px-3 py-3 sm:px-6 sm:py-4 rounded-lg border-2 border-red-500 shadow-[0_0_30px_rgba(255,0,0,0.3)] font-mono">
-          <div className="text-lg sm:text-2xl font-bold text-red-500 mb-2 sm:mb-3 tracking-wider">&gt; TO SLUSH</div>
+          <div className="text-lg sm:text-2xl font-bold text-red-500 mb-2 sm:mb-3 tracking-wider">&gt; TO LONDON</div>
 
           <div className="text-xs sm:text-sm text-red-400 mb-3 sm:mb-4">
             <div className="flex items-center justify-between mb-2">
-              <div>
+              <div className="flex-1">
                 <span className="text-red-500 text-[10px] sm:text-xs">[TRACKED_LOCATIONS]</span>
                 <br />
                 <span className="text-red-300 text-xs sm:text-sm wrap-break-word">{currentLocation}</span>
@@ -1005,23 +1001,21 @@ export default function RoadTripMap() {
                   <span className="text-yellow-400 text-[10px] sm:text-xs ml-1">(Some trackers offline)</span>
                 )}
               </div>
-              {trackerLocations.length > 0 && (
-                <button
-                  onClick={() => setIsTrackerExpanded(!isTrackerExpanded)}
-                  className="sm:hidden text-red-500 transition-transform duration-200"
-                  style={{ transform: isTrackerExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
-                  aria-label="Toggle trackers"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-              )}
+              <button
+                onClick={() => setIsTrackerExpanded(!isTrackerExpanded)}
+                className="text-red-500 transition-transform duration-200"
+                style={{ transform: isTrackerExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                aria-label="Toggle trackers"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
             </div>
-            {trackerLocations.length > 0 && (
+            {isTrackerExpanded && trackerLocations.length > 0 && (
               <>
                 {/* Display active trackers */}
-                <div className={`mt-2 space-y-3 ${isTrackerExpanded ? 'block' : 'hidden sm:block'}`}>
+                <div className="mt-2 space-y-3">
                   {trackerLocations.map(tracker => {
                     const trackerConfig = TRACKERS.find(t => t.id === tracker.trackerId);
                     const label = trackerConfig?.label || tracker.trackerId;
@@ -1204,7 +1198,7 @@ export default function RoadTripMap() {
               &gt; JOIN_CARAVAN
             </div>
             <p className="text-[10px] sm:text-xs text-red-400 mb-4 sm:mb-6 font-mono text-center">
-              Sign up to join us on this epic journey to Slush 2025
+              Sign up to join us on this epic return journey to Telos HQ London
             </p>
 
             <form onSubmit={handleWaitlistSubmit} className="space-y-3 sm:space-y-4">
@@ -1379,6 +1373,15 @@ export default function RoadTripMap() {
           100% {
             transform: translateY(100vh);
             opacity: 0;
+          }
+        }
+
+        @keyframes wave {
+          0%, 100% {
+            transform: scaleX(1);
+          }
+          50% {
+            transform: scaleX(0.8);
           }
         }
 
