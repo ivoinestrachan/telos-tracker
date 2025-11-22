@@ -85,7 +85,7 @@ export default function Home() {
                   PARTNERS
                 </div>
                 <div className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12 lg:gap-16 items-center px-2">
-                  <a
+                  {/* <a
                     href="https://vice.com"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -96,8 +96,8 @@ export default function Home() {
                       alt="VICE NEWS"
                       className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
                     />
-                  </a>
-                  <a
+                  </a> */}
+                  {/* <a
                     href="https://slush.org"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -108,9 +108,9 @@ export default function Home() {
                       alt="SLUSH"
                       className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
                     />
-                  </a>
+                  </a> */}
 
-                   <a
+                   {/* <a
                     href="https://cloud.google.com/?hl=en"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -121,8 +121,8 @@ export default function Home() {
                       alt="google cloud"
                       className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
                     />
-                  </a>
-              
+                  </a> */}
+
                 <a
                   href="https://stix.co/"
                   target="_blank"
@@ -132,7 +132,7 @@ export default function Home() {
                   <Image
                     src={stix}
                     alt="stix"
-                    className="h-8 sm:h-10 md:h-12 lg:h-14 xl:h-16 w-auto"
+                    className="h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto"
                   />
                 </a>
                 
